@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const store = require('../data/store');
+const User = require('../models/User');
 
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
@@ -17,7 +19,10 @@ const protect = (req, res, next) => {
   try {
     const secret = process.env.JWT_SECRET || 'borrowly_super_secure_jwt_secret_key_2026_xyz987';
     const decoded = jwt.verify(token, secret);
-    const user = store.findById('users', decoded.id);
+    let user = store.findById('users', decoded.id);
+    if (!user && mongoose.connection.readyState === 1 && mongoose.isValidObjectId(decoded.id)) {
+      user = await User.findById(decoded.id).lean();
+    }
 
     if (!user) {
       return res.status(401).json({
@@ -27,7 +32,8 @@ const protect = (req, res, next) => {
     }
 
     // Attach user (without password)
-    const { password, ...userWithoutPassword } = user;
+    const { password, _id, ...userWithoutPassword } = user;
+    if (_id && !userWithoutPassword.id) userWithoutPassword.id = _id.toString();
     req.user = userWithoutPassword;
     next();
   } catch (error) {

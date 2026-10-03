@@ -23,7 +23,15 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message = error.response?.data?.message || error.message || 'Something went wrong';
+    const status = error.response?.status;
+    const serverMessage = error.response?.data?.message;
+    const message = typeof serverMessage === 'string'
+      ? serverMessage
+      : status >= 500
+        ? 'Something went wrong. Please try again.'
+        : error.response
+          ? 'Your request could not be completed. Please check your details and try again.'
+          : 'Unable to reach Borrowly. Check your connection and try again.';
     return Promise.reject(new Error(message));
   }
 );
