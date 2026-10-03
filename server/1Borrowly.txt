@@ -1,0 +1,13 @@
+PORT=5001
+NODE_ENV=development
+JWT_SECRET=borrowly_super_secure_jwt_secret_key_2026_xyz987
+CLIENT_URL=http://localhost:5173
+# Optional: MONGO_URI (If omitted or unreachable, Borrowly automatically falls back to in-memory/JSON store with seed data)
+# MONGO_URI=mongodb://localhost:27017/borrowly
+
+#MONGO_URI=mongodb+srv://pondetarini_db_user:SsUcTpyHeDVaJlYC@cluster0.uxtn4hu.mongodb.net/borrowly?retryWrites=true&w=majority
+#MONGODB_URI=mongodb+srv://pondetarini_db_user:DW2hGEp7hy3Pv98D@cluster0.hp0cwoq.mongodb.net/?appName=Cluster0
+#mongodb+srv://pondetarini_db_user:DW2hGEp7hy3Pv98D@cluster0.hp0cwoq.mongodb.net/?appName=Cluster0
+#MONGO_URI=mongodb+srv://pondetarini_db_user:DW2hGEp7hy3Pv98D@YOUR_CLUSTER_HOST/borrowly?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://pondetarini_db_user:DW2hGEp7hy3Pv98D@cluster0.hp0cwoq.mongodb.net/borrowly?retryWrites=true&w=majority
+#MONGO_URI=mongodb+srv://pondetarini_db_user:YOUR_NEW_PASSWORD@cluster0.hp0cwoq.mongodb.net/borrowly?retryWrites=true&w=majority
