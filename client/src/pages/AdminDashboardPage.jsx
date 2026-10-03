@@ -29,7 +29,7 @@ import {
 import { adminAPI, reportAPI } from '../services/api';
 import Loader from '../components/Loader';
 
-const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444'];
+const COLORS = ['#78977A', '#A87D38', '#8D988B', '#648567', '#B97771'];
 
 export const AdminDashboardPage = () => {
   const [stats, setStats] = useState(null);
@@ -109,7 +109,7 @@ export const AdminDashboardPage = () => {
   if (loading) return <Loader text="Loading Borrowly Admin & Moderation Console..." />;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <div className="app-page admin-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -200,13 +200,13 @@ export const AdminDashboardPage = () => {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats?.categoryStats || []}>
-                <XAxis dataKey="name" stroke="#64748b" fontSize={10} tickLine={false} />
-                <YAxis stroke="#64748b" fontSize={10} tickLine={false} allowDecimals={false} />
+                <XAxis dataKey="name" stroke="#777D75" fontSize={10} tickLine={false} />
+                <YAxis stroke="#777D75" fontSize={10} tickLine={false} allowDecimals={false} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px' }}
-                  labelStyle={{ color: '#fff' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E9ECE7', borderRadius: '9px' }}
+                  labelStyle={{ color: '#252923' }}
                 />
-                <Bar dataKey="count" fill="#10b981" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="count" fill="#78977A" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -238,7 +238,7 @@ export const AdminDashboardPage = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E9ECE7', borderRadius: '9px' }}
                 />
               </PieChart>
             </ResponsiveContainer>

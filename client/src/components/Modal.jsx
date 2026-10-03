@@ -21,7 +21,7 @@ export const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-md' 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
       <div
-        className={`relative w-full ${maxWidth} bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden p-6 text-slate-100 transition-all`}
+        className={`app-modal relative w-full ${maxWidth} bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden p-6 text-slate-100 transition-all`}
       >
         <div className="flex items-center justify-between pb-4 border-b border-slate-800">
           <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>

@@ -5,7 +5,7 @@ import { MapPin, Tag, ImageOff, Sparkles } from 'lucide-react';
 export const ItemCard = ({ item, showAiScore = false }) => {
   const itemUrl = `/items/${item.id || item._id}`;
   const isFree = Number(item.pricePerDay) === 0;
-  const availability = item.status?.toLowerCase() === 'active' ? 'Available' : item.status || 'View listing';
+  const availability = item.status?.toLowerCase() === 'active' ? 'Available' : 'Unavailable';
 
   return (
     <article className="item-card group">
@@ -15,7 +15,7 @@ export const ItemCard = ({ item, showAiScore = false }) => {
         ) : (
           <span className="item-image-placeholder" aria-hidden="true"><ImageOff className="h-7 w-7" /></span>
         )}
-        <span className="item-category"><Tag className="h-3 w-3" />{item.category}</span>
+        {item.category && <span className="item-category"><Tag className="h-3 w-3" />{item.category}</span>}
         <span className="item-availability">{availability}</span>
         {showAiScore && item.aiScore && (
           <span className="item-ai-score">
@@ -38,7 +38,7 @@ export const ItemCard = ({ item, showAiScore = false }) => {
             <MapPin className="h-4 w-4 shrink-0 text-emerald-500" />
             <span className="truncate">{item.location}</span>
           </span>
-          <Link to={itemUrl} className="button-card-action">View item</Link>
+          <Link to={itemUrl} className="button-card-action">Borrow item</Link>
         </div>
       </div>
     </article>

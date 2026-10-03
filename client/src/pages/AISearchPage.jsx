@@ -69,7 +69,7 @@ export const AISearchPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="app-page ai-search-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
       <div className="max-w-3xl">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold mb-3">
@@ -86,7 +86,7 @@ export const AISearchPage = () => {
       </div>
 
       {/* Interactive Prompt Box */}
-      <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
+      <div className="ai-prompt-card p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
             <textarea

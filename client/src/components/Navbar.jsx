@@ -200,7 +200,7 @@ export const Navbar = () => {
           ) : (
             <>
               <Link to="/login" className="button-secondary hidden sm:inline-flex">Sign in</Link>
-              <Link to="/register" className="button-primary">Join Borrowly</Link>
+              <Link to="/register" className="button-primary hidden sm:inline-flex">Join Borrowly</Link>
               <button
                 type="button"
                 className="icon-button sm:hidden"

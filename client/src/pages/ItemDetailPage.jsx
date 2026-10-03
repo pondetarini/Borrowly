@@ -157,7 +157,7 @@ export const ItemDetailPage = () => {
   const isOwnItem = user?.id === item.ownerId;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="app-page item-detail-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Back button */}
       <Link
         to="/explore"
@@ -266,7 +266,7 @@ export const ItemDetailPage = () => {
 
         {/* Right Column: Pricing & Booking Card */}
         <div className="space-y-6">
-          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl sticky top-24 space-y-6">
+          <div className="item-booking-card p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl sticky top-24 space-y-6">
             {/* Price Header */}
             <div>
               <span className="text-xs text-slate-400 block mb-1">Borrow Rate:</span>

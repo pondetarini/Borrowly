@@ -78,7 +78,7 @@ export const OwnerRequestsPage = () => {
   if (loading) return <Loader text="Loading owner management hub..." />;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="app-page owner-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -100,7 +100,7 @@ export const OwnerRequestsPage = () => {
 
       {/* Return Confirmation Queue (FR8) */}
       {returnQueue.length > 0 && (
-        <div className="p-6 rounded-3xl bg-purple-950/30 border border-purple-500/40 space-y-4">
+        <div className="return-queue p-6 rounded-3xl bg-purple-950/30 border border-purple-500/40 space-y-4">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping"></span>
             <h2 className="text-base font-bold text-white flex items-center gap-2">

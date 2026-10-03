@@ -58,7 +58,7 @@ export const CreateListingPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="app-page listing-page max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <button
         onClick={() => navigate(-1)}
         className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
@@ -79,7 +79,7 @@ export const CreateListingPage = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6 shadow-xl">
+      <form onSubmit={handleSubmit} className="listing-form p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6 shadow-xl">
         {error && (
           <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />

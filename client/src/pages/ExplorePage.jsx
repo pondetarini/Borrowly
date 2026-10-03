@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Search, Filter, SlidersHorizontal, Sparkles, RefreshCw, X } from 'lucide-react';
+import { Search, RefreshCw } from 'lucide-react';
 import { itemAPI } from '../services/api';
 import ItemCard from '../components/ItemCard';
 import Loader from '../components/Loader';
@@ -19,10 +19,12 @@ export const ExplorePage = () => {
   const [selectedType, setSelectedType] = useState(searchParams.get('type') || 'all'); // 'all', 'borrow', 'rent'
   const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
   const [locationFilter, setLocationFilter] = useState(searchParams.get('location') || '');
+  const [error, setError] = useState('');
 
   const fetchItems = async () => {
     try {
       setLoading(true);
+      setError('');
       const params = {};
       if (search) params.search = search;
       if (selectedCategory !== 'All') params.category = selectedCategory;
@@ -40,6 +42,7 @@ export const ExplorePage = () => {
       if (catRes.data?.success) setCategories(catRes.data.data);
     } catch (err) {
       console.error(err);
+      setError(err.message || 'Unable to load items right now. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -65,60 +68,48 @@ export const ExplorePage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="explore-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-7">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Explore Community Items
-        </h1>
-        <p className="text-sm text-slate-400 mt-1">
-          Discover available tools, appliances, outdoors gear, and event supplies in your neighborhood.
-        </p>
+        <p className="section-kicker">Shared by people nearby</p>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Explore items</h1>
+        <p className="mt-1 text-sm text-slate-400">Find something useful in your community.</p>
       </div>
 
       {/* Main Search & Quick Category Bar */}
       <div className="space-y-4">
-        <form onSubmit={handleSearchSubmit} className="flex gap-2">
-          <div className="relative flex-1">
-            <Search className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+        <form onSubmit={handleSearchSubmit} className="explore-search">
+          <div className="explore-search-input">
+            <Search className="h-5 w-5 shrink-0 text-slate-400" />
             <input
-              type="text"
+              type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by item name, keyword, or brand (e.g. DeWalt drill, tent, projector)..."
-              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-md transition-colors"
+              placeholder="Search for an item"
+              aria-label="Search items"
             />
           </div>
-          <button
-            type="submit"
-            className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center gap-2"
-          >
-            Search
-          </button>
+          <button type="submit" className="button-primary">Search</button>
         </form>
 
         {/* Category Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="explore-categories" aria-label="Filter by category">
           <button
+            type="button"
             onClick={() => setSelectedCategory('All')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
-              selectedCategory === 'All'
-                ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
-                : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
-            }`}
+            aria-pressed={selectedCategory === 'All'}
+            className={`category-chip${selectedCategory === 'All' ? ' category-chip-active' : ''}`}
           >
-            All Categories
+            All items
           </button>
 
           {categories.map((cat) => (
             <button
+              type="button"
               key={cat.id || cat.name}
               onClick={() => setSelectedCategory(cat.name)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
-                selectedCategory === cat.name
-                  ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
-                  : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
-              }`}
+              aria-pressed={selectedCategory === cat.name}
+              className={`category-chip${selectedCategory === cat.name ? ' category-chip-active' : ''}`}
             >
               {cat.name}
             </button>
@@ -127,36 +118,33 @@ export const ExplorePage = () => {
       </div>
 
       {/* Secondary Filters Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <div className="explore-filters">
         <div className="flex flex-wrap items-center gap-3">
           {/* Borrow vs Rent */}
-          <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+          <div className="explore-type-filter" aria-label="Filter by borrowing type">
             <button
               type="button"
               onClick={() => setSelectedType('all')}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                selectedType === 'all' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'
-              }`}
+              aria-pressed={selectedType === 'all'}
+              className={selectedType === 'all' ? 'filter-option filter-option-active' : 'filter-option'}
             >
-              All Types
+              All
             </button>
             <button
               type="button"
               onClick={() => setSelectedType('borrow')}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                selectedType === 'borrow' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'
-              }`}
+              aria-pressed={selectedType === 'borrow'}
+              className={selectedType === 'borrow' ? 'filter-option filter-option-active' : 'filter-option'}
             >
-              🌱 Free Borrow
+              Free to borrow
             </button>
             <button
               type="button"
               onClick={() => setSelectedType('rent')}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                selectedType === 'rent' ? 'bg-teal-600 text-white' : 'text-slate-400 hover:text-white'
-              }`}
+              aria-pressed={selectedType === 'rent'}
+              className={selectedType === 'rent' ? 'filter-option filter-option-active' : 'filter-option'}
             >
-              Rental
+              Paid
             </button>
           </div>
 
@@ -164,7 +152,8 @@ export const ExplorePage = () => {
           <select
             value={selectedCondition}
             onChange={(e) => setSelectedCondition(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 focus:outline-none focus:border-emerald-500"
+            className="explore-select"
+            aria-label="Filter by item condition"
           >
             <option value="All">All Conditions</option>
             <option value="Like New">Like New</option>
@@ -177,15 +166,16 @@ export const ExplorePage = () => {
             type="text"
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
-            placeholder="Filter location (e.g. Brooklyn)..."
-            className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            placeholder="Neighborhood"
+            aria-label="Filter by location"
+            className="explore-location"
           />
         </div>
 
         {/* Reset button */}
         <button
           onClick={handleResetFilters}
-          className="flex items-center gap-1.5 text-slate-400 hover:text-rose-400 transition-colors ml-auto"
+          className="explore-reset"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Reset Filters</span>
@@ -195,27 +185,30 @@ export const ExplorePage = () => {
       {/* Item Results Grid */}
       {loading ? (
         <Loader text="Finding matching community items..." />
+      ) : error ? (
+        <div className="empty-state" role="alert">{error}</div>
       ) : items.length === 0 ? (
-        <div className="p-12 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-4">
-          <p className="text-base text-slate-300 font-semibold">No items match your filter criteria.</p>
-          <p className="text-xs text-slate-500 max-w-md mx-auto">
-            Try resetting your filters or use our AI natural search to match similar alternative items.
+        <div className="empty-state">
+          <p className="font-semibold text-slate-100">No items found</p>
+          <p className="mx-auto max-w-md text-sm text-slate-400">
+            Try another search or clear your filters to see more community listings.
           </p>
           <button
+            type="button"
             onClick={handleResetFilters}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-colors"
+            className="button-secondary"
           >
-            Clear All Filters
+            Clear filters
           </button>
         </div>
       ) : (
         <div>
-          <div className="text-xs text-slate-400 mb-4">
-            Showing <strong className="text-white">{items.length}</strong> available item(s)
+          <div className="mb-4 text-sm text-slate-400">
+            {items.length} {items.length === 1 ? 'item' : 'items'} available
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {items.map((item) => (
-              <ItemCard key={item.id} item={item} />
+              <ItemCard key={item.id || item._id} item={item} />
             ))}
           </div>
         </div>

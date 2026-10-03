@@ -96,7 +96,7 @@ export const MyRequestsPage = () => {
   if (loading) return <Loader text="Loading your loan history..." />;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="app-page requests-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
           My Borrowing History & Active Loans

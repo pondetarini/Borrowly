@@ -38,7 +38,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
+    <div className="app-page auth-page min-h-[85vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <div className="inline-flex p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-3">
@@ -52,7 +52,7 @@ export const RegisterPage = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+        <form onSubmit={handleSubmit} className="auth-form p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
           {error && (
             <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />

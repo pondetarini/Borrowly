@@ -11,4 +11,4 @@ coverage/
 npm-debug.log*
 
 *.zip
-data/db_snapshot.json
+data/db_snapshot.json                                                                                                                                               
